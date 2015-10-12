@@ -11,43 +11,15 @@ local scene = composer.newScene()
 local widget = require "widget"
 
 --------------------------------------------
-
--- forward declarations and other locals
-local qckPlayBtn, stngsBtn
 local screenW, screenH
 screenW = display.contentWidth
 screenH = display.contentHeight
 
 -- 'onRelease' event listener for playBtn
-local function onQckPlayBtnRelease()
+local function onBackBtnRelease()
 	
 	-- go to level1.lua scene
-	composer.gotoScene( "level1", "fade", 500 )
-	
-	return true	-- indicates successful touch
-end
-
-local function onCstmBtnRelease()
-
-	-- placeholder - just loads level1.lua
-	composer.gotoScene( "custom", "fade", 500 )
-	
-	return true	-- indicates successful touch
-end
-
-local function onMPlyrBtnRelease()
-
-	-- placeholder - just loads level1.lua
-	composer.gotoScene( "multiplayer", "fade", 500 )
-	
-	return true	-- indicates successful touch
-end
-
-
-local function onStngsBtnRelease()
-
-	-- placeholder - just loads level1.lua
-	composer.gotoScene( "settings", "fade", 500 )
+	composer.gotoScene( "menu", "fade", 500 )
 	
 	return true	-- indicates successful touch
 end
@@ -66,50 +38,24 @@ function scene:create( event )
 	background.anchorY = 0
 	background.x, background.y = 0, 0
 
-	-- create a widget button (which will launch a game with predefined settings on release)
-	qckPlayBtn = widget.newButton{
-		defaultFile="quickgameButton.png",
-		overFile="quickgameButton.png",
-		onRelease = onQckPlayBtnRelease	-- event listener function
-	}
-	qckPlayBtn.x = screenW / 2
-	qckPlayBtn.y = screenH * ( 4 / 8 )
 
-	-- create a widget button (which will load custom game setup menu on release)
-	cstmBtn = widget.newButton{
-		defaultFile="customgameButton.png",
-		overFile="customgameButton.png",
-		onRelease = onCstmBtnRelease	-- event listener function
+	-- create a widget button (which will load main menu on release)
+	backBtn = widget.newButton{
+		label = "Back",
+		labelColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 1, 0.2, 0.5, 1 } },
+		width = screenW / 3 , height = screenH / 10 ,
+		textOnly = true, emboss = true,
+		fontSize = screenH / 10,
+		onRelease = onBackBtnRelease	-- event listener function
 	}
-	cstmBtn.x = screenW / 2
-	cstmBtn.y = screenH * ( 5 / 8 )
-
-	-- create a widget button (which will load multiplayer setup menu on release)
-	mPlyrBtn = widget.newButton{
-		defaultFile="multiplayerButton.png",
-		overFile="multiplayerButton.png",
-		onRelease = onMPlyrBtnRelease	-- event listener function
-	}
-	mPlyrBtn.x = screenW / 2
-	mPlyrBtn.y = screenH * ( 6 / 8 )
-
-	-- create a widget button (which will load settings menu on release)
-	stngsBtn = widget.newButton{
-		defaultFile="settingsButton.png",
-		overFile="settingsButton.png",
-		onRelease = onStngsBtnRelease	-- event listener function
-	}
-	stngsBtn.x = screenW / 2
-	stngsBtn.y = screenH * ( 7 / 8 )
+	backBtn.x = screenW / 2
+	backBtn.y = screenH * ( 7 / 8 )
 
 	
 
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
-	sceneGroup:insert( qckPlayBtn )
-	sceneGroup:insert( cstmBtn )
-	sceneGroup:insert( mPlyrBtn )
-	sceneGroup:insert( stngsBtn )
+	sceneGroup:insert( backBtn )
 end
 
 function scene:show( event )
